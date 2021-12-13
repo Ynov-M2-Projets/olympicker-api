@@ -13,6 +13,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("/orgs")
+@RestController
 public class OrganizationController {
 
     @Autowired
