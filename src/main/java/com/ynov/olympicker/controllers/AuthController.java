@@ -7,7 +7,10 @@ import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,5 +29,12 @@ public class AuthController {
     @RequestMapping(value = "/register", method = {RequestMethod.POST})
     public TokenDTO createUser(@RequestBody CreateUserDTO createUserDTO) {
         return authService.createUser(createUserDTO);
+    }
+
+    @Operation(summary = "Get current user")
+    @PreAuthorize("!isAnonymous()")
+    @RequestMapping(value = "/me", method = {RequestMethod.GET})
+    public User getUserByEmail(Principal principal) {
+        return authService.whoami(principal);
     }
 }

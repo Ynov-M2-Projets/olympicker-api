@@ -6,8 +6,10 @@ import com.ynov.olympicker.dto.TokenDTO;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -36,8 +38,10 @@ public class AuthService {
 
     public TokenDTO getUserToken(String email, String password) {
         User user = userRepository.findByEmail(email);
-        if (user == null) return null;
-        if (!passwordEncoder.matches(password, user.getPassword())) return null;
+        if (user == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+
+        if (!passwordEncoder.matches(password, user.getPassword()))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         String token = jwtTokenProvider.createToken(user);
         return new TokenDTO(token, user);
     }
