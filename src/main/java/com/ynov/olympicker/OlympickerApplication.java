@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 
 @SpringBootApplication
 @Controller
@@ -19,8 +20,8 @@ public class OlympickerApplication extends SpringBootServletInitializer {
 
     @RequestMapping("/")
     @ResponseBody
-    String home() {
-        return "Hello World!";
+    RedirectView home() {
+        return new RedirectView("/api");
     }
 
     @Override
