@@ -39,7 +39,7 @@ public class AuthService {
         if (user == null) return null;
         if (!passwordEncoder.matches(password, user.getPassword())) return null;
         String token = jwtTokenProvider.createToken(user);
-        return new TokenDTO(token);
+        return new TokenDTO(token, user);
     }
 
 
@@ -49,6 +49,6 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userRepository.save(user);
         String token = jwtTokenProvider.createToken(user);
-        return new TokenDTO(token);
+        return new TokenDTO(token, user);
     }
 }
