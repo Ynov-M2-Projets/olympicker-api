@@ -25,7 +25,6 @@ public class AuthController {
     @Operation(summary = "Create a user")
     @RequestMapping(value = "/register", method = {RequestMethod.POST})
     public TokenDTO createUser(@RequestBody CreateUserDTO createUserDTO) {
-        User user = authService.createUser(createUserDTO);
-        return authService.getUserToken(user.getEmail(), user.getPassword());
+        return authService.createUser(createUserDTO);
     }
 }

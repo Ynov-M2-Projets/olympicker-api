@@ -43,10 +43,12 @@ public class AuthService {
     }
 
 
-    public User createUser(CreateUserDTO userDTO) {
+    public TokenDTO createUser(CreateUserDTO userDTO) {
         User user = new User();
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
+        String token = jwtTokenProvider.createToken(user);
+        return new TokenDTO(token);
     }
 }
