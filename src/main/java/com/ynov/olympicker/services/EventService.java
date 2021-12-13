@@ -16,17 +16,16 @@ public class EventService {
     private EventRepository eventRepository;
 
 
-    List<Event> getAllEvents(Integer page, Integer size) {
+    public List<Event> getAllEvents(Integer page, Integer size) {
         return eventRepository.findAll(PageRequest.of(page, size))
                 .getContent();
     }
 
-    Event getEventById(Long id) {
+    public Event getEventById(Long id) {
         return eventRepository.findById(id).orElse(null);
     }
 
-    Event createEvent(CreateEventDTO event) {
+    public Event createEvent(CreateEventDTO event) {
         return eventRepository.save(event);
     }
-
 }
