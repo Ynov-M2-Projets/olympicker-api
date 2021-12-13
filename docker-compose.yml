@@ -1,13 +1,18 @@
 version: "3.1"
 
 services:
-  db:
-    image: mysql:5.7
+  olympicker-postgres:
+    container_name: olympicker-container-database
+    image: postgres
     restart: unless-stopped
     ports:
-      - "3306:3306"
+      - '5432:5432'
+    volumes:
+      - olympicker-postgres:/var/lib/postgresql/data
     environment:
-      MYSQL_DATABASE: "tp-spring"
-      MYSQL_USER: "j2ee-tp-spring"
-      MYQL_PASSWORD: "pwj2ee-tp-spring"
-      MYSQL_ROOT_PASSWORD: "root"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+volumes:
+  olympicker-postgres:

@@ -13,10 +13,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @Column
@@ -26,10 +26,18 @@ public class User {
     private String lastName;
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "user_organization",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "organization_id"))
     List<Organization> organizations;
+
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(name = "user_event",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    List<Event> events;
 
     public Long getId() {
         return id;
@@ -71,6 +79,12 @@ public class User {
         this.lastName = lastName;
     }
 
+    public List<Organization> getOrganizations() {
+        return organizations;
+    }
 
+    public void setOrganizations(List<Organization> organizations) {
+        this.organizations = organizations;
+    }
 }
 

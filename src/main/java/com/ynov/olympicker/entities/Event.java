@@ -1,6 +1,9 @@
 package com.ynov.olympicker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -24,6 +27,11 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "organization_id", nullable = false)
     private Organization organization;
+
+    @ManyToMany(mappedBy = "events")
+    @JsonIgnore
+    private List<User> participants;
+
 
     @Column
     private Integer slots;
@@ -74,5 +82,13 @@ public class Event {
 
     public void setSlots(Integer slots) {
         this.slots = slots;
+    }
+
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
     }
 }

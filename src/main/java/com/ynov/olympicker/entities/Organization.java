@@ -1,5 +1,7 @@
 package com.ynov.olympicker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,10 +23,11 @@ public class Organization {
     private User owner;
 
     @ManyToMany(mappedBy = "organizations")
+    @JsonIgnore
     private List<User> members;
 
     @Column
-    private Boolean verified;
+    private Boolean verified = false;
 
     public Long getId() {
         return id;
