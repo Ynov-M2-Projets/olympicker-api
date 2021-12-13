@@ -32,7 +32,7 @@ public class AuthController {
     }
 
     @Operation(summary = "Get current user")
-    @PreAuthorize("!isAnonymous()")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/me", method = {RequestMethod.GET})
     public User getUserByEmail(Principal principal) {
         return authService.whoami(principal);
