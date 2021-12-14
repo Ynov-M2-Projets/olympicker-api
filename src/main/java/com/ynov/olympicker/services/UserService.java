@@ -1,5 +1,6 @@
 package com.ynov.olympicker.services;
 
+import com.ynov.olympicker.dto.UpdateUserDTO;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,12 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public User updateUser(UpdateUserDTO userDTO, User user) {
+        if (userDTO.getFirstname() != null) user.setFirstName(userDTO.getFirstname());
+        if (userDTO.getLastname() != null) user.setLastName(userDTO.getLastname());
+        if (userDTO.getEmail() != null) user.setEmail(userDTO.getEmail());
+        return userRepository.save(user);
     }
 }
