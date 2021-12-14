@@ -37,7 +37,6 @@ public class Event {
     @Column
     private Integer slots;
 
-
     public void addParticipant(User user) {
         participants.add(user);
     }

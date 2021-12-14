@@ -1,5 +1,6 @@
 package com.ynov.olympicker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,12 @@ public class Stage {
     private Long id;
 
     @Column
+    private String name;
+
+    @Column
+    private String description;
+
+    @Column
     private Date date;
 
     @Column
@@ -24,6 +31,7 @@ public class Stage {
     private Double price;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "event_id")
     private StageEvent event;
 }

@@ -1,32 +1,35 @@
 package com.ynov.olympicker.services;
 
-import com.ynov.olympicker.dto.CreateEventDTO;
-import com.ynov.olympicker.entities.Event;
-import com.ynov.olympicker.entities.Organization;
-import com.ynov.olympicker.entities.Sport;
-import com.ynov.olympicker.entities.User;
-import com.ynov.olympicker.repositories.EventRepository;
-import com.ynov.olympicker.repositories.OrganizationRepository;
-import com.ynov.olympicker.repositories.SportRepository;
+import com.ynov.olympicker.dto.CreateStageDTO;
+import com.ynov.olympicker.dto.CreateStageEventDTO;
+import com.ynov.olympicker.dto.CreateSimpleEventDTO;
+import com.ynov.olympicker.entities.*;
+import com.ynov.olympicker.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class EventService {
 
     @Autowired
-    private EventRepository<Event> eventRepository;
+    private EventRepository eventRepository;
+
+    @Autowired
+    private SimpleEventRepository simpleEventRepository;
+
+    @Autowired
+    private StageEventRepository stageEventRepository;
 
     @Autowired
     private SportRepository sportRepository;
 
     @Autowired
     private OrganizationRepository organizationRepository;
+
+    @Autowired
+    private StageRepository stageRepository;
 
 
     public Page<Event> getAllEvents(Pageable pageable) {
@@ -37,10 +40,18 @@ public class EventService {
         return eventRepository.findById(id).orElse(null);
     }
 
-    public Event createEvent(CreateEventDTO eventDTO) {
-        Event event = new Event();
+    public SimpleEvent createSimpleEvent(CreateSimpleEventDTO eventDTO) {
+        SimpleEvent event = new SimpleEvent();
         event.setName(eventDTO.getName());
         event.setDescription(eventDTO.getDescription());
+
+        Stage stage = new Stage();
+        stage.setName(eventDTO.getName());
+        stage.setDescription(eventDTO.getDescription());
+        stage.setDate(eventDTO.getDate());
+        stage.setLocation(eventDTO.getLocation());
+        stage.setPrice(eventDTO.getPrice());
+        stageRepository.save(stage);
         Sport sport = sportRepository.findById(eventDTO.getSportId()).orElse(null);
         Organization organization = organizationRepository.findById(eventDTO.getOrganizationId()).orElse(null);
         if (sport == null || organization == null) {
@@ -48,7 +59,8 @@ public class EventService {
         }
         event.setSport(sport);
         event.setOrganization(organization);
-        return eventRepository.save(event);
+        event.setStage(stage);
+        return simpleEventRepository.save(event);
     }
 
     public boolean joinEvent(User user, Long eventId) {
@@ -65,5 +77,40 @@ public class EventService {
         event.getParticipants().remove(user);
         eventRepository.save(event);
         return true;
+    }
+
+    public StageEvent createStageEvent(CreateStageEventDTO event) {
+
+        StageEvent stageEvent = new StageEvent();
+        stageEvent.setName(event.getName());
+        stageEvent.setDescription(event.getDescription());
+        Sport sport = sportRepository.findById(event.getSportId()).orElse(null);
+        Organization organization = organizationRepository.findById(event.getOrganizationId()).orElse(null);
+        if (sport == null || organization == null) {
+            throw new IllegalArgumentException("Sport or Organization not found");
+        }
+        stageEvent.setSport(sport);
+        stageEvent.setOrganization(organization);
+        Stage stage = new Stage();
+        stage.setName(event.getName());
+        stage.setDescription(event.getDescription());
+        stageEventRepository.save(stageEvent);
+        stage.setEvent(stageEvent);
+        stageRepository.save(stage);
+        return stageEvent;
+    }
+
+    public Stage addStageToEvent(CreateStageDTO stageDTO, StageEvent event) {
+        if (event == null) return null;
+        Stage stage = new Stage();
+        stage.setLocation(stageDTO.getLocation());
+        stage.setDate(stageDTO.getDate());
+        stage.setName(stageDTO.getName());
+        stage.setDescription(stageDTO.getDescription());
+        stage.setPrice(stageDTO.getPrice());
+        stageRepository.save(stage);
+        event.addStage(stage);
+        eventRepository.save(event);
+        return stage;
     }
 }

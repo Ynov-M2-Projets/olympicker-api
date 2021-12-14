@@ -1,13 +1,12 @@
 package com.ynov.olympicker.controllers;
 
-import com.ynov.olympicker.application.PaginationResponse;
-import com.ynov.olympicker.dto.CreateEventDTO;
-import com.ynov.olympicker.entities.Event;
-import com.ynov.olympicker.entities.User;
+import com.ynov.olympicker.dto.CreateSimpleEventDTO;
+import com.ynov.olympicker.dto.CreateStageDTO;
+import com.ynov.olympicker.dto.CreateStageEventDTO;
+import com.ynov.olympicker.entities.*;
 import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.EventService;
 import com.ynov.olympicker.services.OrganizationService;
-import com.ynov.olympicker.utils.PaginationUtils;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,9 +46,15 @@ public class EventController {
     }
 
     @PreAuthorize("organizationService.getOrganizationById(event.organizationId).isMember(authService.whoami(principal))")
-    @RequestMapping(method = RequestMethod.POST)
-    public Event createEvent(@RequestBody CreateEventDTO event, Principal principal) {
-        return this.eventService.createEvent(event);
+    @RequestMapping(value = "/simple", method = RequestMethod.POST)
+    public SimpleEvent createSimpleEvent(@RequestBody CreateSimpleEventDTO event, Principal principal) {
+        return this.eventService.createSimpleEvent(event);
+    }
+
+    @PreAuthorize("organizationService.getOrganizationById(event.organizationId).isMember(authService.whoami(principal))")
+    @RequestMapping(value = "/stage", method = RequestMethod.POST)
+    public StageEvent createStageEvent(@RequestBody CreateStageEventDTO event, Principal principal) {
+        return this.eventService.createStageEvent(event);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -75,4 +80,13 @@ public class EventController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
     }
 
+
+    @RequestMapping(value = "/{id}/add-stage", method = RequestMethod.POST)
+    @PreAuthorize("organizationService.getOrganizationById(event.organization).isMember(authService.whoami(principal))")
+    public Stage addStage(@PathVariable("id") StageEvent event, @RequestBody CreateStageDTO stageDTO) {
+        Stage stage = this.eventService.addStageToEvent(stageDTO, event);
+        if (stage != null) return stage;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+
+    }
 }

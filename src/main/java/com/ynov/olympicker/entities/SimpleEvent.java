@@ -8,10 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("E")
+@DiscriminatorValue("S")
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class SingleEvent extends Event {
+public class SimpleEvent extends Event {
 
     @OneToOne
     private Stage stage;
