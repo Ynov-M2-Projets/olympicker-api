@@ -73,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.GET, "/events", "/events/").permitAll()
+                .antMatchers(HttpMethod.GET, "/sports", "/sports/").permitAll()
                 .anyRequest().authenticated();
 
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
