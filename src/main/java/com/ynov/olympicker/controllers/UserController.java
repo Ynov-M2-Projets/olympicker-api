@@ -6,7 +6,11 @@ import com.ynov.olympicker.entities.Organization;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.UserService;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -53,5 +57,10 @@ public class UserController {
         User user = this.userService.getUserById(id);
         if (user != null) return user.getAllOrganizations();
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Page<User> getAllUsers(@ParameterObject @PageableDefault(size = 25) Pageable pageable) {
+        return this.userService.getAllUsers(pageable);
     }
 }

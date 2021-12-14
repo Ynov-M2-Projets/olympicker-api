@@ -4,7 +4,9 @@ import com.ynov.olympicker.dto.CreateSportDTO;
 import com.ynov.olympicker.entities.Sport;
 import com.ynov.olympicker.repositories.SportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +18,8 @@ public class SportService {
     @Autowired
     private SportRepository sportRepository;
 
-    public List<Sport> getAllSports(Integer page, Integer size) {
-        return sportRepository.findAll(PageRequest.of(page, size))
-                .getContent();
+    public Page<Sport> getAllSports(Pageable pageable) {
+        return sportRepository.findAll(pageable);
     }
 
 

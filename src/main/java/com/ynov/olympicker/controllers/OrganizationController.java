@@ -5,7 +5,11 @@ import com.ynov.olympicker.entities.Organization;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.OrganizationService;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +27,8 @@ public class OrganizationController {
     private AuthService authService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Organization> getAllOrgs(
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "25") Integer size
-    ) {
-        return organizationService.getAllOrganizations(page, size);
+    public Page<Organization> getAllOrgs(@ParameterObject @PageableDefault(size = 25) Pageable pageable) {
+        return organizationService.getAllOrganizations(pageable);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

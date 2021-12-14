@@ -3,12 +3,14 @@ package com.ynov.olympicker.controllers;
 import com.ynov.olympicker.dto.CreateSportDTO;
 import com.ynov.olympicker.entities.Sport;
 import com.ynov.olympicker.services.SportService;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/sports")
@@ -19,9 +21,8 @@ public class SportController {
     private SportService sportService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Sport> getAllSports(@RequestParam(defaultValue = "0") Integer page,
-                                    @RequestParam(defaultValue = "25") Integer size) {
-        return sportService.getAllSports(page, size);
+    public Page<Sport> getAllSports(@ParameterObject @PageableDefault(size = 25) Pageable pageable) {
+        return sportService.getAllSports(pageable);
     }
 
 

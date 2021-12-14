@@ -6,6 +6,7 @@ import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.repositories.OrganizationRepository;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,9 +29,8 @@ public class OrganizationService {
         return organizationRepository.findById(id).orElse(null);
     }
 
-    public List<Organization> getAllOrganizations(Integer pageNo, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNo, pageSize);
-        return organizationRepository.findAll(paging).getContent();
+    public Page<Organization> getAllOrganizations(Pageable pageable) {
+        return organizationRepository.findAll(pageable);
     }
 
     public Organization createOrganization(User user, CreateOrganizationDTO orga) {
