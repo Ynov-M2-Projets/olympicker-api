@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public User updateUser(UpdateUserDTO userDTO, Principal principal) {
+    public User updateUser(@RequestBody UpdateUserDTO userDTO, Principal principal) {
         User user = authService.whoami(principal);
         return this.userService.updateUser(userDTO, user);
     }

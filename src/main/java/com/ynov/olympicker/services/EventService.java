@@ -49,4 +49,12 @@ public class EventService {
         event.setOrganization(organization);
         return eventRepository.save(event);
     }
+
+    public boolean joinEvent(User user, Long id) {
+        Event event = eventRepository.findById(id).orElse(null);
+        if (event == null) return false;
+        event.addParticipant(user);
+        eventRepository.save(event);
+        return true;
+    }
 }

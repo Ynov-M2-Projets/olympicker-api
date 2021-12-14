@@ -50,4 +50,12 @@ public class EventController {
         return this.eventService.createEvent(event, user);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value = "/{id}/join", method = RequestMethod.GET)
+    public void joinEvent(@PathVariable("id") Long id, Principal principal) {
+        User user = this.authService.whoami(principal);
+        boolean joined = this.eventService.joinEvent(user, id);
+        if (!joined) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+    }
+
 }
