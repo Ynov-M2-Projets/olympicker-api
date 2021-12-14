@@ -36,10 +36,4 @@ public class Organization implements Comparable<Organization> {
     public Boolean isMember(User user) {
         return this.members.contains(user) || this.owner.equals(user);
     }
-
-    @Override
-    @JsonIgnore
-    public int compareTo(Organization o) {
-        return this.id.compareTo(o.getId());
-    }
 }
