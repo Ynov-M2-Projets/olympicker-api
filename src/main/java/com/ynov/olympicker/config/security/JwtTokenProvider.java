@@ -35,8 +35,7 @@ public class JwtTokenProvider {
 
     private Claims createTokenSubject(User user) {
         String email = user.getEmail();
-        Claims claims = Jwts.claims().setSubject(email);
-        claims.put("email", email);
+        Claims claims = Jwts.claims().setSubject(user.getId().toString());
         return claims;
     }
 
@@ -58,8 +57,8 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        String email = claims.getBody().get("email", String.class);
-        UserDetails userDetails = myUserDetails.loadUserByEmail(email);
+        Long userId = Long.parseLong(claims.getBody().getSubject());
+        UserDetails userDetails = myUserDetails.loadUserById(userId);
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 

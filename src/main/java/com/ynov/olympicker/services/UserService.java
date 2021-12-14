@@ -30,9 +30,6 @@ public class UserService {
     }
 
     public boolean changePassword(String oldPassword, String newPassword, User user) {
-        System.out.println("Old password : " + oldPassword);
-        System.out.println("New password : " + newPassword);
-
         if (passwordEncoder.matches(oldPassword, user.getPassword())) {
             user.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(user);
