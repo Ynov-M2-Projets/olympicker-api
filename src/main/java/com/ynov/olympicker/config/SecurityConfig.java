@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -66,11 +67,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // No session will be created or used by spring security
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        System.out.println("configure");
 
         http.authorizeRequests()
                 .antMatchers("/api", "/api/**", "/swagger-ui/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.GET, "/events").permitAll()
                 .anyRequest().authenticated();
 
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));

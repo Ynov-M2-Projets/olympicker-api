@@ -28,8 +28,7 @@ public class EventController {
     @Autowired
     private OrganizationService organizationService;
 
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Event> getEvents(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "25") Integer size
