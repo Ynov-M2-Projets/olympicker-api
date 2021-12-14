@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "organizations")
 @Data
-public class Organization implements Comparable<Organization> {
+public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
