@@ -18,13 +18,18 @@ import java.util.List;
 public class EventService {
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventRepository<Event> eventRepository;
 
     @Autowired
     private SportRepository sportRepository;
 
     @Autowired
     private OrganizationRepository organizationRepository;
+
+
+    public Long getNumberOfEvents() {
+        return eventRepository.count();
+    }
 
     public List<Event> getAllEvents(Integer page, Integer size) {
 
@@ -36,7 +41,7 @@ public class EventService {
         return eventRepository.findById(id).orElse(null);
     }
 
-    public Event createEvent(CreateEventDTO eventDTO, User user) {
+    public Event createEvent(CreateEventDTO eventDTO) {
         Event event = new Event();
         event.setName(eventDTO.getName());
         event.setDescription(eventDTO.getDescription());
@@ -50,10 +55,18 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    public boolean joinEvent(User user, Long id) {
-        Event event = eventRepository.findById(id).orElse(null);
+    public boolean joinEvent(User user, Long eventId) {
+        Event event = eventRepository.findById(eventId).orElse(null);
         if (event == null) return false;
         event.addParticipant(user);
+        eventRepository.save(event);
+        return true;
+    }
+
+    public boolean leaveEvent(User user, Long eventId) {
+        Event event = eventRepository.findById(eventId).orElse(null);
+        if (event == null) return false;
+        event.getParticipants().remove(user);
         eventRepository.save(event);
         return true;
     }

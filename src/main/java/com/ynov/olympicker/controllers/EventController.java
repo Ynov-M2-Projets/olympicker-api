@@ -1,11 +1,13 @@
 package com.ynov.olympicker.controllers;
 
+import com.ynov.olympicker.application.PaginationResponse;
 import com.ynov.olympicker.dto.CreateEventDTO;
 import com.ynov.olympicker.entities.Event;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.EventService;
 import com.ynov.olympicker.services.OrganizationService;
+import com.ynov.olympicker.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,11 +31,14 @@ public class EventController {
     private OrganizationService organizationService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Event> getEvents(
+    public PaginationResponse<Event> getEvents(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "25") Integer size
     ) {
-        return this.eventService.getAllEvents(page, size);
+
+        List<Event> events = this.eventService.getAllEvents(page, size);
+        int totalData = Math.toIntExact(this.eventService.getNumberOfEvents());
+        return new PaginationResponse<>(events, PaginationUtils.createPaginator(page, size, totalData));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -46,8 +51,7 @@ public class EventController {
     @PreAuthorize("organizationService.getOrganizationById(event.organizationId).isMember(authService.whoami(principal))")
     @RequestMapping(method = RequestMethod.POST)
     public Event createEvent(@RequestBody CreateEventDTO event, Principal principal) {
-        User user = this.authService.whoami(principal);
-        return this.eventService.createEvent(event, user);
+        return this.eventService.createEvent(event);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -56,6 +60,21 @@ public class EventController {
         User user = this.authService.whoami(principal);
         boolean joined = this.eventService.joinEvent(user, id);
         if (!joined) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value = "/{id}/leave", method = RequestMethod.GET)
+    public void leaveEvent(@PathVariable("id") Long id, Principal principal) {
+        User user = this.authService.whoami(principal);
+        boolean left = this.eventService.leaveEvent(user, id);
+        if (!left) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+    }
+
+    @RequestMapping("/{id}/participants")
+    public List<User> getParticipants(@PathVariable("id") Long id) {
+        Event event = this.eventService.getEventById(id);
+        if (event != null) return event.getParticipants();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
     }
 
 }
