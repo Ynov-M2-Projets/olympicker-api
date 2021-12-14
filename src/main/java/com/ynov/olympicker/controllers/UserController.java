@@ -7,10 +7,7 @@ import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -40,5 +37,12 @@ public class UserController {
     public User updateUser(UpdateUserDTO userDTO, Principal principal) {
         User user = authService.whoami(principal);
         return this.userService.updateUser(userDTO, user);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public User getUser(@PathVariable("id") Long id) {
+        User user = this.userService.getUserById(id);
+        if (user != null) return user;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 }
