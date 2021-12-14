@@ -49,6 +49,7 @@ public class User {
     List<Event> events;
 
 
+    @JsonIgnore
     public List<Organization> getAllOrganizations() {
         Set<Organization> allOrganizations = new HashSet<>();
         allOrganizations.addAll(this.organizations);
