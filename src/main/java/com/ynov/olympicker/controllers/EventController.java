@@ -6,7 +6,6 @@ import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.EventService;
 import com.ynov.olympicker.services.OrganizationService;
-import com.ynov.olympicker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
