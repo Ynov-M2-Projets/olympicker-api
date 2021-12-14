@@ -42,8 +42,8 @@ public class UserService {
     }
 
     public User updateUser(UpdateUserDTO userDTO, User user) {
-        user.setFirstName(userDTO.getFirstname());
-        user.setLastName(userDTO.getLastname());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
         return userRepository.save(user);
     }
