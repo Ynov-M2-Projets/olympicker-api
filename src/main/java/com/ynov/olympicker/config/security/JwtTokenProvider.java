@@ -60,7 +60,7 @@ public class JwtTokenProvider {
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         String email = claims.getBody().get("email", String.class);
         UserDetails userDetails = myUserDetails.loadUserByEmail(email);
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
     public String resolveToken(HttpServletRequest req) {

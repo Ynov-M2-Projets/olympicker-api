@@ -1,8 +1,17 @@
 package com.ynov.olympicker.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ynov.olympicker.entities.Event;
+import lombok.Data;
 
-@JsonIgnoreProperties({ "organization", "id"})
-public class CreateEventDTO extends Event {
+@JsonIgnoreProperties()
+@Data
+public class CreateEventDTO {
+
+    private String name;
+
+    private String description;
+
+    private Long sportId;
+
+    private Long organizationId;
 }
