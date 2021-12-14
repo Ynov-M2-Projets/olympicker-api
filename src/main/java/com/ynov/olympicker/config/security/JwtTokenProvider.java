@@ -34,9 +34,7 @@ public class JwtTokenProvider {
 
 
     private Claims createTokenSubject(User user) {
-        String email = user.getEmail();
-        Claims claims = Jwts.claims().setSubject(user.getId().toString());
-        return claims;
+        return Jwts.claims().setSubject(user.getId().toString());
     }
 
 
