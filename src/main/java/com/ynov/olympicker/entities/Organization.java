@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "organizations")
 @Data
-public class Organization {
+public class Organization implements Comparable<Organization> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +31,15 @@ public class Organization {
 
     @Column
     private Boolean verified = false;
-    
+
+    @JsonIgnore
     public Boolean isMember(User user) {
         return this.members.contains(user) || this.owner.equals(user);
+    }
+
+    @Override
+    @JsonIgnore
+    public int compareTo(Organization o) {
+        return this.id.compareTo(o.getId());
     }
 }

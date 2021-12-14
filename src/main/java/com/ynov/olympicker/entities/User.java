@@ -1,11 +1,14 @@
 package com.ynov.olympicker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.source.tree.Tree;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "users")
@@ -50,10 +53,10 @@ public class User {
 
 
     public List<Organization> getAllOrganizations() {
-        List<Organization> allOrganizations = new ArrayList<>();
+        Set<Organization> allOrganizations = new TreeSet<>();
         allOrganizations.addAll(this.organizations);
         allOrganizations.addAll(this.ownedOrganizations);
-        return allOrganizations;
+        return new ArrayList<>(allOrganizations);
     }
 }
 
