@@ -28,7 +28,7 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
 
     public User whoami(Principal principal) {
-        return userRepository.findByEmail(principal.getName());
+        return userRepository.findById(Long.parseLong(principal.getName())).orElse(null);
     }
 
     public User whoami(HttpServletRequest request) {
