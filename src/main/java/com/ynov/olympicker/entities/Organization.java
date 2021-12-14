@@ -12,6 +12,7 @@ import java.util.List;
 public class Organization {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
