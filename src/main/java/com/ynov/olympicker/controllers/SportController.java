@@ -18,14 +18,14 @@ public class SportController {
     @Autowired
     private SportService sportService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Sport> getAllSports(@RequestParam(defaultValue = "0") Integer page,
                                     @RequestParam(defaultValue = "25") Integer size) {
         return sportService.getAllSports(page, size);
     }
 
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public Sport createSport(@RequestBody CreateSportDTO createSportDTO) {
         return sportService.createSport(createSportDTO);
     }

@@ -22,7 +22,7 @@ public class OrganizationController {
     @Autowired
     private AuthService authService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Organization> getAllOrgs(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "25") Integer size
@@ -35,7 +35,7 @@ public class OrganizationController {
         return this.organizationService.getOrganizationById(id);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping( method = RequestMethod.POST)
     public Organization createOrg(@RequestBody CreateOrganizationDTO org, Principal principal) {
         User user = authService.whoami(principal);
         return this.organizationService.createOrganization(user, org);

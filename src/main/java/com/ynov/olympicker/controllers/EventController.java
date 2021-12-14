@@ -28,7 +28,7 @@ public class EventController {
     @Autowired
     private OrganizationService organizationService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Event> getEvents(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "25") Integer size
@@ -44,7 +44,7 @@ public class EventController {
     }
 
     @PreAuthorize("organizationService.getOrganizationById(event.organizationId).isMember(authService.whoami(principal))")
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public Event createEvent(@RequestBody CreateEventDTO event, Principal principal) {
         User user = this.authService.whoami(principal);
         return this.eventService.createEvent(event, user);
