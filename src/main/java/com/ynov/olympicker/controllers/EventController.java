@@ -68,7 +68,7 @@ public class EventController {
         if (!left) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
     }
 
-    @RequestMapping("/{id}/participants")
+    @RequestMapping(value = "/{id}/participants", method = RequestMethod.GET)
     public List<User> getParticipants(@PathVariable("id") Long id) {
         Event event = this.eventService.getEventById(id);
         if (event != null) return event.getParticipants();
