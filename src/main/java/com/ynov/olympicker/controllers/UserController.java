@@ -2,6 +2,7 @@ package com.ynov.olympicker.controllers;
 
 import com.ynov.olympicker.dto.ChangePasswordDTO;
 import com.ynov.olympicker.dto.UpdateUserDTO;
+import com.ynov.olympicker.entities.Organization;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.UserService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -43,6 +45,13 @@ public class UserController {
     public User getUser(@PathVariable("id") Long id) {
         User user = this.userService.getUserById(id);
         if (user != null) return user;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public List<Organization> getUserOrganizations(@PathVariable("id") Long id) {
+        User user = this.userService.getUserById(id);
+        if (user != null) return user.getAllOrganizations();
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 }

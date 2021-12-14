@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,11 +36,24 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "organization_id"))
     List<Organization> organizations;
 
+
+    @OneToMany(mappedBy = "owner")
+    @JsonIgnore
+    private List<Organization> ownedOrganizations;
+
     @ManyToMany
     @JsonIgnore
     @JoinTable(name = "user_event",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     List<Event> events;
+
+
+    public List<Organization> getAllOrganizations() {
+        List<Organization> allOrganizations = new ArrayList<>();
+        allOrganizations.addAll(this.organizations);
+        allOrganizations.addAll(this.ownedOrganizations);
+        return allOrganizations;
+    }
 }
 

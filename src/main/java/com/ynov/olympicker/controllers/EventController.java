@@ -8,7 +8,11 @@ import com.ynov.olympicker.services.AuthService;
 import com.ynov.olympicker.services.EventService;
 import com.ynov.olympicker.services.OrganizationService;
 import com.ynov.olympicker.utils.PaginationUtils;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +35,8 @@ public class EventController {
     private OrganizationService organizationService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public PaginationResponse<Event> getEvents(
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "25") Integer size
-    ) {
-
-        List<Event> events = this.eventService.getAllEvents(page, size);
-        int totalData = Math.toIntExact(this.eventService.getNumberOfEvents());
-        return new PaginationResponse<>(events, PaginationUtils.createPaginator(page, size, totalData));
+    public Page<Event> getEvents(@ParameterObject @PageableDefault(size = 25) Pageable pageable) {
+        return this.eventService.getAllEvents(pageable);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

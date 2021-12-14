@@ -9,7 +9,9 @@ import com.ynov.olympicker.repositories.EventRepository;
 import com.ynov.olympicker.repositories.OrganizationRepository;
 import com.ynov.olympicker.repositories.SportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,14 +29,8 @@ public class EventService {
     private OrganizationRepository organizationRepository;
 
 
-    public Long getNumberOfEvents() {
-        return eventRepository.count();
-    }
-
-    public List<Event> getAllEvents(Integer page, Integer size) {
-
-        return eventRepository.findAll(PageRequest.of(page, size))
-                .getContent();
+    public Page<Event> getAllEvents(Pageable pageable) {
+        return eventRepository.findAll(pageable);
     }
 
     public Event getEventById(Long id) {
