@@ -42,9 +42,9 @@ public class UserService {
     }
 
     public User updateUser(UpdateUserDTO userDTO, User user) {
-        if (userDTO.getFirstname() != null) user.setFirstName(userDTO.getFirstname());
-        if (userDTO.getLastname() != null) user.setLastName(userDTO.getLastname());
-        if (userDTO.getEmail() != null) user.setEmail(userDTO.getEmail());
+        user.setFirstName(userDTO.getFirstname());
+        user.setLastName(userDTO.getLastname());
+        user.setEmail(userDTO.getEmail());
         return userRepository.save(user);
     }
 }
