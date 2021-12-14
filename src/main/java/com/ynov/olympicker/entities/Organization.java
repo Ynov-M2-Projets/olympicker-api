@@ -31,8 +31,7 @@ public class Organization {
 
     @Column
     private Boolean verified = false;
-
-
+    
     public Boolean isMember(User user) {
         return this.members.contains(user) || this.owner.equals(user);
     }

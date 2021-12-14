@@ -41,9 +41,5 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     List<Event> events;
-
-    public void setOrganizations(List<Organization> organizations) {
-        this.organizations = organizations;
-    }
 }
 

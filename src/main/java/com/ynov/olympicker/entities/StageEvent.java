@@ -19,10 +19,9 @@ public class StageEvent extends Event {
         return getStages().get(stages.size() - 1).getDate();
     }
 
-    private List<Stage> getStages() {
+    public List<Stage> getStages() {
         return this.stages.stream().sorted(Comparator.comparing(Stage::getDate)).collect(Collectors.toList());
     }
-
 
     public void setStages(List<Stage> stages) {
         this.stages = stages;

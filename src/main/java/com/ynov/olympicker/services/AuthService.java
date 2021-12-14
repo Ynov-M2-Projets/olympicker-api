@@ -1,7 +1,7 @@
 package com.ynov.olympicker.services;
 
 import com.ynov.olympicker.config.security.JwtTokenProvider;
-import com.ynov.olympicker.dto.CreateUserDTO;
+import com.ynov.olympicker.dto.LoginRegisterDTO;
 import com.ynov.olympicker.dto.TokenDTO;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.repositories.UserRepository;
@@ -46,7 +46,7 @@ public class AuthService {
     }
 
 
-    public TokenDTO createUser(CreateUserDTO userDTO) {
+    public TokenDTO createUser(LoginRegisterDTO userDTO) {
         User user = new User();
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));

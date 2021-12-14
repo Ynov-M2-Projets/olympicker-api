@@ -1,10 +1,13 @@
 package com.ynov.olympicker.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Table
 @Entity
+@Data
 public class Stage {
 
     @Id
@@ -23,36 +26,4 @@ public class Stage {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private StageEvent event;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 }

@@ -34,7 +34,6 @@ public class Event {
     @JsonIgnore
     private List<User> participants;
 
-
     @Column
     private Integer slots;
 }
