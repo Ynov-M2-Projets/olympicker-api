@@ -25,7 +25,7 @@ public class UserController {
 
     @RequestMapping(value = "/change_password", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void changePassword(ChangePasswordDTO changePasswordDTO, Principal principal) {
+    public void changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, Principal principal) {
         User user = authService.whoami(principal);
         boolean changed = this.userService.changePassword(changePasswordDTO.getOldPassword(), changePasswordDTO.getNewPassword(), user);
         if (!changed) {
