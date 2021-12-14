@@ -66,7 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // No session will be created or used by spring security
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        System.out.println("configure");
 
         http.authorizeRequests()
                 .antMatchers("/api", "/api/**", "/swagger-ui/**").permitAll()

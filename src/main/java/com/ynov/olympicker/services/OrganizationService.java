@@ -64,4 +64,13 @@ public class OrganizationService {
         if (organization == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization not found");
         return organization.getMembers();
     }
+
+    public Organization addMember(Long orgId, Long userId) {
+        Organization organization = organizationRepository.findById(orgId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        if (organization == null || user == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization or User not found");
+        organization.getMembers().add(user);
+        return organizationRepository.save(organization);
+    }
 }

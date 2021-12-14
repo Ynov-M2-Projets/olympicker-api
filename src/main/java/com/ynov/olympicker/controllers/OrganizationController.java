@@ -58,4 +58,11 @@ public class OrganizationController {
     public List<User> getAllMembers(@PathVariable Long id) {
         return this.organizationService.getAllMembers(id);
     }
+
+
+    @PreAuthorize("authService.whoami(principal).id == organizationService.getOrganizationById(#id).owner.id")
+    @RequestMapping(value = "/{id}/add_member/{userId}", method = RequestMethod.PUT)
+    public Organization addMember(@PathVariable Long id, @PathVariable Long userId, Principal principal) {
+        return this.organizationService.addMember(id, userId);
+    }
 }
