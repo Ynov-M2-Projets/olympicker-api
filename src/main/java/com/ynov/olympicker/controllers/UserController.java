@@ -48,7 +48,7 @@ public class UserController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/organizations", method = RequestMethod.GET)
     public List<Organization> getUserOrganizations(@PathVariable("id") Long id) {
         User user = this.userService.getUserById(id);
         if (user != null) return user.getAllOrganizations();
