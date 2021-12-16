@@ -75,8 +75,10 @@ public class OrganizationService {
         if (organization == null || user == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization or User not found");
         organization.getMembers().add(user);
-        System.out.println("Insert member" + user.getEmail() + " in organization " + organization.getName());
-        return organizationRepository.save(organization);
+        user.getOrganizations().add(organization);
+        userRepository.save(user);
+        System.out.println("Insert member " + user.getEmail() + " in organization " + organization.getName());
+        return organization;
     }
 
     public List<Event> getOrganizationEvents(Long id) {
