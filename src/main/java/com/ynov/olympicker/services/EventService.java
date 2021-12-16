@@ -31,6 +31,9 @@ public class EventService {
     @Autowired
     private StageRepository stageRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     public Page<Event> getAllEvents(Pageable pageable) {
         return eventRepository.findAll(pageable);
@@ -66,16 +69,16 @@ public class EventService {
     public boolean joinEvent(User user, Long eventId) {
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event == null) return false;
-        event.addParticipant(user);
-        eventRepository.save(event);
+        user.getEvents().add(event);
+        userRepository.save(user);
         return true;
     }
 
     public boolean leaveEvent(User user, Long eventId) {
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event == null) return false;
-        event.getParticipants().remove(user);
-        eventRepository.save(event);
+        user.getEvents().remove(event);
+        userRepository.save(user);
         return true;
     }
 
