@@ -83,4 +83,13 @@ public class OrganizationService {
     public List<Event> getOrganizationEvents(Long id) {
         return eventRepository.findByOrganizationId(id);
     }
+
+    public Organization removeMember(Long orgId, Long userId) {
+        Organization organization = organizationRepository.findById(orgId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        if (organization == null || user == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization or User not found");
+        organization.getMembers().remove(user);
+        return organizationRepository.save(organization);
+    }
 }
