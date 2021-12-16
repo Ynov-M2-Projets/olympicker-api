@@ -5,6 +5,7 @@ import com.ynov.olympicker.entities.Event;
 import com.ynov.olympicker.entities.Organization;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.repositories.EventRepository;
+import com.ynov.olympicker.repositories.EventRepositoryNoPagination;
 import com.ynov.olympicker.repositories.OrganizationRepository;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class OrganizationService {
     private UserRepository userRepository;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventRepositoryNoPagination eventRepository;
 
 
     public Organization getOrganizationById(Long id) {
