@@ -1,6 +1,7 @@
 package com.ynov.olympicker.controllers;
 
 import com.ynov.olympicker.dto.CreateOrganizationDTO;
+import com.ynov.olympicker.entities.Event;
 import com.ynov.olympicker.entities.Organization;
 import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.services.AuthService;
@@ -36,7 +37,7 @@ public class OrganizationController {
         return this.organizationService.getOrganizationById(id);
     }
 
-    @RequestMapping( method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public Organization createOrg(@RequestBody CreateOrganizationDTO org, Principal principal) {
         User user = authService.whoami(principal);
         return this.organizationService.createOrganization(user, org);
@@ -66,4 +67,10 @@ public class OrganizationController {
     public Organization addMember(@PathVariable Long id, @PathVariable Long userId, Principal principal) {
         return this.organizationService.addMember(id, userId);
     }
+
+    @RequestMapping(value = "/{id}/events", method = RequestMethod.GET)
+    public Page<Event> getOrganizationEvents(@PathVariable Long id, @ParameterObject @PageableDefault(size = 25) Pageable pageable) {
+        return this.organizationService.getOrganizationEvents(id, pageable);
+    }
+
 }

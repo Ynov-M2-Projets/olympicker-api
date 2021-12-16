@@ -1,8 +1,10 @@
 package com.ynov.olympicker.services;
 
 import com.ynov.olympicker.dto.CreateOrganizationDTO;
+import com.ynov.olympicker.entities.Event;
 import com.ynov.olympicker.entities.Organization;
 import com.ynov.olympicker.entities.User;
+import com.ynov.olympicker.repositories.EventRepository;
 import com.ynov.olympicker.repositories.OrganizationRepository;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class OrganizationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
 
     public Organization getOrganizationById(Long id) {
@@ -72,5 +77,9 @@ public class OrganizationService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization or User not found");
         organization.getMembers().add(user);
         return organizationRepository.save(organization);
+    }
+
+    public Page<Event> getOrganizationEvents(Long id, Pageable pageable) {
+        return eventRepository.findByOrganizationId(id, pageable);
     }
 }

@@ -32,6 +32,10 @@ public class Organization {
     @Column
     private Boolean verified = false;
 
+    @OneToMany(mappedBy = "organization")
+    @JsonIgnore
+    private List<Event> events;
+
     @JsonIgnore
     public Boolean isMember(User user) {
         return this.members.contains(user) || this.owner.equals(user);
