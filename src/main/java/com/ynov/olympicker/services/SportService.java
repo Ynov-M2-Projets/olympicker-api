@@ -14,14 +14,12 @@ import java.util.List;
 @Service
 public class SportService {
 
-
     @Autowired
     private SportRepository sportRepository;
 
-    public Page<Sport> getAllSports(Pageable pageable) {
-        return sportRepository.findAll(pageable);
+    public List<Sport> getAllSports() {
+        return sportRepository.findAll();
     }
-
 
     public Sport getSportById(Long id) {
         return sportRepository.findById(id).orElse(null);

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/sports")
 public class SportController {
@@ -21,8 +23,8 @@ public class SportController {
     private SportService sportService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<Sport> getAllSports(@ParameterObject @PageableDefault(size = 25) Pageable pageable) {
-        return sportService.getAllSports(pageable);
+    public List<Sport> getAllSports() {
+        return sportService.getAllSports();
     }
 
 
