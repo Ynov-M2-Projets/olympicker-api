@@ -90,6 +90,7 @@ public class OrganizationService {
         if (organization == null || user == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization or User not found");
         user.getOrganizations().remove(organization);
+        userRepository.save(user);
         return organization;
     }
 }
