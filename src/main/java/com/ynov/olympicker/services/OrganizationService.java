@@ -81,6 +81,6 @@ public class OrganizationService {
     }
 
     public List<Event> getOrganizationEvents(Long id) {
-        return eventRepository.findByOrganizationId(id).getContent();
+        return eventRepository.findByOrganizationId(id);
     }
 }
