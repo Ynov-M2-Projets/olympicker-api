@@ -79,7 +79,7 @@ public class OrganizationService {
         return organizationRepository.save(organization);
     }
 
-    public Page<Event> getOrganizationEvents(Long id, Pageable pageable) {
-        return eventRepository.findByOrganizationId(id, pageable);
+    public List<Event> getOrganizationEvents(Long id) {
+        return eventRepository.findByOrganizationId(id).getContent();
     }
 }

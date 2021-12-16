@@ -69,8 +69,8 @@ public class OrganizationController {
     }
 
     @RequestMapping(value = "/{id}/events", method = RequestMethod.GET)
-    public Page<Event> getOrganizationEvents(@PathVariable Long id, @ParameterObject @PageableDefault(size = 25) Pageable pageable) {
-        return this.organizationService.getOrganizationEvents(id, pageable);
+    public List<Event> getOrganizationEvents(@PathVariable Long id) {
+        return this.organizationService.getOrganizationEvents(id);
     }
 
 }
