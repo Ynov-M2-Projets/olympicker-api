@@ -4,13 +4,11 @@ import com.ynov.olympicker.dto.CreateOrganizationDTO;
 import com.ynov.olympicker.entities.Event;
 import com.ynov.olympicker.entities.Organization;
 import com.ynov.olympicker.entities.User;
-import com.ynov.olympicker.repositories.EventRepository;
 import com.ynov.olympicker.repositories.EventRepositoryNoPagination;
 import com.ynov.olympicker.repositories.OrganizationRepository;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -77,6 +75,7 @@ public class OrganizationService {
         if (organization == null || user == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization or User not found");
         organization.getMembers().add(user);
+        System.out.println("Insert member" + user.getEmail() + " in organization " + organization.getName());
         return organizationRepository.save(organization);
     }
 
