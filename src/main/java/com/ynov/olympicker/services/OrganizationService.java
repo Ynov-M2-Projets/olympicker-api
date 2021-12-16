@@ -77,7 +77,6 @@ public class OrganizationService {
         organization.getMembers().add(user);
         user.getOrganizations().add(organization);
         userRepository.save(user);
-        System.out.println("Insert member " + user.getEmail() + " in organization " + organization.getName());
         return organization;
     }
 
@@ -90,7 +89,7 @@ public class OrganizationService {
         User user = userRepository.findById(userId).orElse(null);
         if (organization == null || user == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Organization or User not found");
-        organization.getMembers().remove(user);
-        return organizationRepository.save(organization);
+        user.getOrganizations().remove(organization);
+        return organization;
     }
 }
