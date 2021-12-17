@@ -31,8 +31,6 @@ public class UserService {
 
 
     public User getUserById(Long id) {
-
-        List<Organization> orgsMember = organizationRepository.findByMembersInOrOwner(id);
         return userRepository.findById(id).orElse(null);
     }
 
