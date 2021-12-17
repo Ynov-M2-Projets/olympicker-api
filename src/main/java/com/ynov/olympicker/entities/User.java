@@ -47,9 +47,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     List<Event> events;
-    
+
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Ranking ranking;
+    @OneToMany(mappedBy = "user")
+    private List<Ranking> rankings;
 }
 
