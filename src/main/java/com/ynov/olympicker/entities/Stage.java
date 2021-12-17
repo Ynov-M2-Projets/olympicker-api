@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Table
 @Entity
@@ -34,4 +35,8 @@ public class Stage {
     @JsonIgnore
     @JoinColumn(name = "event_id")
     private StageEvent event;
+
+    @OneToMany(mappedBy = "stage")
+    @JsonIgnore
+    private List<Ranking> ranking;
 }

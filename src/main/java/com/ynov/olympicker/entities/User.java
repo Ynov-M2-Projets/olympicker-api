@@ -56,5 +56,9 @@ public class User {
         allOrganizations.addAll(this.ownedOrganizations);
         return new ArrayList<>(allOrganizations);
     }
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private Ranking ranking;
 }
 
