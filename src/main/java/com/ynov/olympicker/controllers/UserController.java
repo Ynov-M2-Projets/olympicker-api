@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,8 +56,7 @@ public class UserController {
     @RequestMapping(value = "/{id}/organizations", method = RequestMethod.GET)
     public List<Organization> getUserOrganizations(@PathVariable("id") Long id) {
         User user = this.userService.getUserById(id);
-        System.out.println(user.getEmail());
-        if (user != null) return user.getAllOrganizations();
+        if (user != null) return new ArrayList<>();
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 

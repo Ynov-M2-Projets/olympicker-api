@@ -23,7 +23,6 @@ public class Organization {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User owner;
 
     @ManyToMany(mappedBy = "organizations")
