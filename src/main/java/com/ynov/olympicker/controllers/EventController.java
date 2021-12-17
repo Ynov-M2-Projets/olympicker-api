@@ -62,7 +62,7 @@ public class EventController {
     public void joinEvent(@PathVariable("id") Long id, Principal principal) {
         User user = this.authService.whoami(principal);
         boolean joined = this.eventService.joinEvent(user, id);
-        if (!joined) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+        if (!joined) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not join event");
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

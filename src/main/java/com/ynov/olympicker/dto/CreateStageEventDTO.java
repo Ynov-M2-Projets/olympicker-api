@@ -11,4 +11,6 @@ public class CreateStageEventDTO {
     private Long sportId;
 
     private Long organizationId;
+
+    private Integer maxParticipant;
 }

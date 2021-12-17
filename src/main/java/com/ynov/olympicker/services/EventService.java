@@ -47,6 +47,9 @@ public class EventService {
         SimpleEvent event = new SimpleEvent();
         event.setName(eventDTO.getName());
         event.setDescription(eventDTO.getDescription());
+        if (eventDTO.getMaxParticipant() != null) {
+            event.setSlots(eventDTO.getMaxParticipant());
+        }
         Stage stage = new Stage();
         stage.setName(eventDTO.getName());
         stage.setDescription(eventDTO.getDescription());
@@ -68,6 +71,7 @@ public class EventService {
     public boolean joinEvent(User user, Long eventId) {
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event == null) return false;
+        if (event.getSlots() != null && event.getSlots() <= event.getParticipants().size()) return false;
         user.getEvents().add(event);
         userRepository.save(user);
         return true;
@@ -86,6 +90,9 @@ public class EventService {
         StageEvent stageEvent = new StageEvent();
         stageEvent.setName(event.getName());
         stageEvent.setDescription(event.getDescription());
+        if (event.getMaxParticipant() != null) {
+            stageEvent.setSlots(event.getMaxParticipant());
+        }
         Sport sport = sportRepository.findById(event.getSportId()).orElse(null);
         Organization organization = organizationRepository.findById(event.getOrganizationId()).orElse(null);
         if (sport == null || organization == null) {

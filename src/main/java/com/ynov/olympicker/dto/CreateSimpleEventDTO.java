@@ -22,4 +22,6 @@ public class CreateSimpleEventDTO {
     private String location;
 
     private Double price;
+
+    private Integer maxParticipant;
 }
