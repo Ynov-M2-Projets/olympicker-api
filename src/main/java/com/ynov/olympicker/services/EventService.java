@@ -100,12 +100,7 @@ public class EventService {
         }
         stageEvent.setSport(sport);
         stageEvent.setOrganization(organization);
-        Stage stage = new Stage();
-        stage.setName(event.getName());
-        stage.setDescription(event.getDescription());
         stageEventRepository.save(stageEvent);
-        stage.setEvent(stageEvent);
-        stageRepository.save(stage);
         return stageEvent;
     }
 
