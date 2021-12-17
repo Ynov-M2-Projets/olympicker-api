@@ -34,7 +34,7 @@ public class Stage {
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "event_id")
-    private StageEvent event;
+    private Event event;
 
     @OneToMany(mappedBy = "stage")
     @JsonIgnore
