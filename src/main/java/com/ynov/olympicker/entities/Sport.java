@@ -1,8 +1,10 @@
 package com.ynov.olympicker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "sports")
@@ -22,4 +24,8 @@ public class Sport {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "sport")
+    @JsonIgnore
+    private List<Event> events;
 }

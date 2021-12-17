@@ -1,6 +1,7 @@
 package com.ynov.olympicker.controllers;
 
 import com.ynov.olympicker.dto.CreateSportDTO;
+import com.ynov.olympicker.entities.Event;
 import com.ynov.olympicker.entities.Sport;
 import com.ynov.olympicker.services.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,14 @@ public class SportController {
     public Sport getSportById(@PathVariable Long id) {
         Sport sport = sportService.getSportById(id);
         if (sport != null) return sport;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sport not found");
+    }
+
+
+    @RequestMapping(value = "/{id}/events", method = RequestMethod.DELETE)
+    public List<Event> getSportEvent(@PathVariable Long id) {
+        Sport sport = sportService.getSportById(id);
+        if (sport != null) return sport.getEvents();
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sport not found");
     }
 
