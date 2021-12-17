@@ -47,7 +47,6 @@ public class EventService {
         SimpleEvent event = new SimpleEvent();
         event.setName(eventDTO.getName());
         event.setDescription(eventDTO.getDescription());
-
         Stage stage = new Stage();
         stage.setName(eventDTO.getName());
         stage.setDescription(eventDTO.getDescription());

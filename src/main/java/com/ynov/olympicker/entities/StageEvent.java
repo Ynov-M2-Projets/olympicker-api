@@ -13,7 +13,11 @@ public class StageEvent extends Event {
     @OneToMany(mappedBy = "event")
     private List<Stage> stages = new ArrayList<>();
 
-
+    @Override
+    public EventType getEventType() {
+        return EventType.STAGE;
+    }
+    
     public Date getStartDate() {
         if (this.stages.size() == 0) {
             return null;

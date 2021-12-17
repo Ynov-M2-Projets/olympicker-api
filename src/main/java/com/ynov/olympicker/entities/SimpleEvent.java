@@ -16,4 +16,9 @@ public class SimpleEvent extends Event {
     @OneToOne
     private Stage stage;
 
+
+    @Override
+    public EventType getEventType() {
+        return EventType.SIMPLE;
+    }
 }
