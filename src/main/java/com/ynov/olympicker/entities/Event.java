@@ -37,5 +37,8 @@ public class Event {
     @Column
     private Integer slots;
 
-    private EventType type;
+    public EventType getType() {
+        return EventType.SIMPLE;
+    }
+
 }
