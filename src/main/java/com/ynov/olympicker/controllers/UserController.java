@@ -55,8 +55,8 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/organizations", method = RequestMethod.GET)
     public List<Organization> getUserOrganizations(@PathVariable("id") Long id) {
-        List<Organization> user = this.userService.getUserOrganisations(id);
-        if (user != null) return new ArrayList<>();
+        List<Organization> orgs = this.userService.getUserOrganisations(id);
+        if (orgs != null) return orgs;
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 
