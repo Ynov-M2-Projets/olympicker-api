@@ -13,7 +13,6 @@ public class Ranking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "id_stage", referencedColumnName = "id")

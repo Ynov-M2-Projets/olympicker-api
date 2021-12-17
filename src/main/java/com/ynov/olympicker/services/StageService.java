@@ -4,6 +4,7 @@ import com.ynov.olympicker.dto.CreateRankingEntryDTO;
 import com.ynov.olympicker.entities.Ranking;
 import com.ynov.olympicker.entities.Stage;
 import com.ynov.olympicker.entities.User;
+import com.ynov.olympicker.repositories.RankingRepository;
 import com.ynov.olympicker.repositories.StageRepository;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class StageService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RankingRepository rankingRepository;
+
 
     public List<Ranking> getRanking(Long id) {
         Stage stage = stageRepository.findById(id).orElse(null);
@@ -35,14 +39,13 @@ public class StageService {
 
     public Ranking createRankingEntry(Stage stage, CreateRankingEntryDTO createRankingEntry) {
         User user = userRepository.findById(createRankingEntry.getUserId()).orElse(null);
-
         if (stage.getEvent().getParticipants().contains(user)) {
             if (user == null) return null;
             Ranking ranking = new Ranking();
             ranking.setUser(user);
             ranking.setStage(stage);
             ranking.setPosition(createRankingEntry.getPosition());
-            return ranking;
+            return rankingRepository.save(ranking);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not in event");
     }
