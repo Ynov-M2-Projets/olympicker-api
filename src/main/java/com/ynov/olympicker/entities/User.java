@@ -47,16 +47,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     List<Event> events;
-
-
-    @JsonIgnore
-    public List<Organization> getAllOrganizations() {
-        Set<Organization> allOrganizations = new HashSet<>();
-        allOrganizations.addAll(this.organizations);
-        allOrganizations.addAll(this.ownedOrganizations);
-        return new ArrayList<>(allOrganizations);
-    }
-
+    
     @JsonIgnore
     @OneToOne(mappedBy = "user")
     private Ranking ranking;
