@@ -38,7 +38,7 @@ public class SportController {
     }
 
 
-    @RequestMapping(value = "/{id}/events", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/events", method = RequestMethod.GET)
     public List<Event> getSportEvent(@PathVariable Long id) {
         Sport sport = sportService.getSportById(id);
         if (sport != null) return sport.getEvents();
