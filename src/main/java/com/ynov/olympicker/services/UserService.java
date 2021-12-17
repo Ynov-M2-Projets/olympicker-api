@@ -55,6 +55,8 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        return user.getOrganizations();
+        List<Organization> organizations = user.getOrganizations();
+        organizations.addAll(user.getOwnedOrganizations());
+        return organizations;
     }
 }
