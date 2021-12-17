@@ -112,6 +112,7 @@ public class EventService {
         stage.setName(stageDTO.getName());
         stage.setDescription(stageDTO.getDescription());
         stage.setPrice(stageDTO.getPrice());
+        stage.setEvent(event);
         stageRepository.save(stage);
         event.addStage(stage);
         eventRepository.save(event);
