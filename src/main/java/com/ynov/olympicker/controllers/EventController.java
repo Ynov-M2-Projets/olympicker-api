@@ -1,5 +1,6 @@
 package com.ynov.olympicker.controllers;
 
+import com.ynov.olympicker.dto.AddStageResponseDTO;
 import com.ynov.olympicker.dto.CreateSimpleEventDTO;
 import com.ynov.olympicker.dto.CreateStageDTO;
 import com.ynov.olympicker.dto.CreateStageEventDTO;
@@ -83,11 +84,10 @@ public class EventController {
 
     @RequestMapping(value = "/{id}/add-stage", method = RequestMethod.POST)
     @PreAuthorize("organizationService.getOrganizationById(event.organization).isMember(authService.whoami(principal))")
-    public Stage addStage(@PathVariable("id") StageEvent event, @RequestBody CreateStageDTO stageDTO) {
+    public AddStageResponseDTO addStage(@PathVariable("id") StageEvent event, @RequestBody CreateStageDTO stageDTO) {
         Stage stage = this.eventService.addStageToEvent(stageDTO, event);
-        if (stage != null) return stage;
+        if (stage != null) return new AddStageResponseDTO(event, stage);
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-
     }
 
 
