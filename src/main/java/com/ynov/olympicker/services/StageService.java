@@ -7,7 +7,9 @@ import com.ynov.olympicker.entities.User;
 import com.ynov.olympicker.repositories.StageRepository;
 import com.ynov.olympicker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -33,11 +35,15 @@ public class StageService {
 
     public Ranking createRankingEntry(Stage stage, CreateRankingEntryDTO createRankingEntry) {
         User user = userRepository.findById(createRankingEntry.getUserId()).orElse(null);
-        if (user == null) return null;
-        Ranking ranking = new Ranking();
-        ranking.setUser(user);
-        ranking.setStage(stage);
-        ranking.setPosition(createRankingEntry.getPosition());
-        return ranking;
+
+        if (stage.getEvent().getParticipants().contains(user)) {
+            if (user == null) return null;
+            Ranking ranking = new Ranking();
+            ranking.setUser(user);
+            ranking.setStage(stage);
+            ranking.setPosition(createRankingEntry.getPosition());
+            return ranking;
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not in event");
     }
 }
