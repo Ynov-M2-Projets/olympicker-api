@@ -37,5 +37,5 @@ public class Event {
     @Column
     private Integer slots;
 
-    private EventType eventType;
+    private EventType type;
 }

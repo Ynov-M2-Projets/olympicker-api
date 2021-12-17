@@ -18,7 +18,7 @@ public class SimpleEvent extends Event {
 
 
     @Override
-    public EventType getEventType() {
+    public EventType getType() {
         return EventType.SIMPLE;
     }
 }

@@ -14,10 +14,10 @@ public class StageEvent extends Event {
     private List<Stage> stages = new ArrayList<>();
 
     @Override
-    public EventType getEventType() {
+    public EventType getType() {
         return EventType.STAGE;
     }
-    
+
     public Date getStartDate() {
         if (this.stages.size() == 0) {
             return null;
